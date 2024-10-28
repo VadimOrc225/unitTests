@@ -38,13 +38,14 @@ class ShopTest {
 
     private ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-    // private Shop shop;
-    // private Cart cart;
-    //  @BeforeEach
-    //  void setup() {
-    //      shop = new Shop(getStoreItems());
-    //      cart = new Cart(shop);
-    //  }
+    private Shop shop;
+    private Cart cart;
+
+    @BeforeEach
+    void setup() {
+        shop = new Shop(getStoreItems());
+        cart = new Cart(shop);
+    }
 
 
 /*
@@ -71,12 +72,9 @@ class ShopTest {
      */
     @Test
     void priceCartIsCorrectCalculated() {
-        // Arrange (Подготовка)
-        Shop shop = new Shop(getStoreItems());
-        Cart cart = new Cart(shop);
-        // Act (Выполнение)
+
         cart.addProductToCartByID(1); // 170 +
-        //..
+        assertThat(cart.getTotalPrice()).isEqualTo(170);
     }
 
     /**
@@ -87,12 +85,11 @@ class ShopTest {
      */
     @Test
     void priceCartProductsSameTypeIsCorrectCalculated() {
-        // Arrange
-
         // Act
-
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
         // Assert
-
+        assertThat(cart.getTotalPrice()).isEqualTo(340);
     }
 
     /**
@@ -103,7 +100,12 @@ class ShopTest {
      */
     @Test
     void whenChangingCartCostRecalculationIsCalled() {
-
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        assertThat(cart.getTotalPrice()).isEqualTo(340);
+        cart.removeProductByID(1);
+        cart.recalculate();
+        assertThat(cart.getTotalPrice()).isEqualTo(170);
     }
 
     /**
@@ -113,8 +115,11 @@ class ShopTest {
      * Количество товара в магазине уменьшается на число продуктов в корзине пользователя
      */
 
+    @Test
     void quantityProductsStoreChanging() {
-
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        assertThat(shop.getProductsShop().get(0).getQuantity()).isEqualTo(8);
     }
 
     /**
@@ -123,8 +128,20 @@ class ShopTest {
      * <br><b>Ожидаемый результат:</b>
      * Больше такой продукт заказать нельзя, он не появляется на полке
      */
-
+    @Test
     void lastProductsDisappearFromStore() {
+
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        cart.addProductToCartByID(1);
+        assertThat(shop.getProductsShop().get(0).getQuantity()).isEqualTo(0);
 
     }
 
@@ -165,15 +182,15 @@ class ShopTest {
      */
     @Test
     void test3() {
-              Shop shop = new Shop(getStoreItems());
-            Cart cart = new Cart(shop);
-    // Assert (Проверка утверждения)
+        Shop shop = new Shop(getStoreItems());
+        Cart cart = new Cart(shop);
+        // Assert (Проверка утверждения)
 
-    //          // Act (Выполнение)
-              cart.addProductToCartByID(2); // 250
-              cart.addProductToCartByID(2); // 250
+        //          // Act (Выполнение)
+        cart.addProductToCartByID(2); // 250
+        cart.addProductToCartByID(2); // 250
         assertThat(cart.getTotalPrice()).isEqualTo(500);
-          }
+    }
 
     @Test
     void testSUM() {
@@ -188,5 +205,5 @@ class ShopTest {
      * <br> 4. После проверки работоспособности теста, его нужно выключить
      */
 
-   // ...
+    // ...
 }
