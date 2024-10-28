@@ -1,7 +1,12 @@
 package seminars.second.hw;
 
-public class Main {
+import seminars.second.simple_shopping_cart.Shop;
+import seminars.second.simple_shopping_cart.TextUserInterface;
 
+public class Main {
+    public static void main(String[] args) {
+
+    }
     /*
      Домашнее задание к семинару №2 JUnit:
      1. Настроить новый проект:
