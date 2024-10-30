@@ -151,8 +151,11 @@ class ShopTest {
      * <br><b>Ожидаемый результат:</b>
      * Количество продуктов этого типа на складе увеличивается на число удаленных из корзины продуктов
      */
+    @Test
     void deletedProductIsReturnedToShop() {
-
+        cart.addProductToCartByID(1);
+        cart.removeProductByID(1);
+        assertThat(shop.getProductsShop().get(0).getQuantity()).isEqualTo(10);
     }
 
     /**
@@ -162,7 +165,7 @@ class ShopTest {
      * Исключение типа RuntimeException и сообщение Не найден продукт с id
      * *Сделать тест параметризованным
      */
-    //@Test
+  //@Test
     void incorrectProductSelectionCausesException(int i) {
 
     }
